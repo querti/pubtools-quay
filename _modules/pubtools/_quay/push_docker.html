@@ -613,12 +613,14 @@
             <span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_signatures</span><span class="p">:</span>
                 <span class="n">signatures_to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">esig</span><span class="p">[</span><span class="s2">&quot;_id&quot;</span><span class="p">])</span>
 
+        <span class="n">cert</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">get_pyxis_ssl_paths</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">signatures_to_remove</span><span class="p">:</span>
             <span class="n">signature_remover</span><span class="o">.</span><span class="n">remove_signatures_from_pyxis</span><span class="p">(</span>
                 <span class="n">signatures_to_remove</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;pyxis_server&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;iib_krb_principal&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;iib_krb_ktfile&quot;</span><span class="p">],</span>
+                <span class="n">cert</span><span class="p">,</span>
+                <span class="n">key</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="n">signatures_to_remove</span> <span class="o">=</span> <span class="p">[]</span>
@@ -658,8 +660,8 @@
                 <span class="n">signature_remover</span><span class="o">.</span><span class="n">remove_signatures_from_pyxis</span><span class="p">(</span>
                     <span class="n">signatures_to_remove</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;pyxis_server&quot;</span><span class="p">],</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;iib_krb_principal&quot;</span><span class="p">],</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;iib_krb_ktfile&quot;</span><span class="p">],</span>
+                    <span class="n">cert</span><span class="p">,</span>
+                    <span class="n">key</span><span class="p">,</span>
                 <span class="p">)</span></div>
 
 <div class="viewcode-block" id="PushDocker.run"><a class="viewcode-back" href="../../../push_docker.html#pubtools._quay.push_docker.PushDocker.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -678,9 +680,6 @@
 <span class="sd">        - Push the index images to Quay</span>
 <span class="sd">        - Remove outdated container signatures</span>
 <span class="sd">        - (in case of failure) Rollback destination repos to the pre-push state</span>
-
-<span class="sd">        Returns ([str]):</span>
-<span class="sd">            List of container image repos (for UD cache flush done by pub)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># TODO: Do we need to manage push item state?</span>
         <span class="c1"># Filter out non-docker push items</span>
@@ -736,20 +735,13 @@
                 <span class="n">container_signature_handler</span><span class="p">,</span>
                 <span class="n">operator_signature_handler</span><span class="p">,</span>
                 <span class="n">sig_remover</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="c1"># Return repos for UD cache flush</span>
-        <span class="n">repos</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">docker_push_items</span><span class="p">:</span>
-            <span class="n">repos</span> <span class="o">+=</span> <span class="n">item</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">repos</span><span class="p">)))</span></div></div>
+            <span class="p">)</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">mod_entry_point</span><span class="p">(</span><span class="n">push_items</span><span class="p">,</span> <span class="n">hub</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_settings</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Entry point for use in another python code.&quot;&quot;&quot;</span>
     <span class="n">push</span> <span class="o">=</span> <span class="n">PushDocker</span><span class="p">(</span><span class="n">push_items</span><span class="p">,</span> <span class="n">hub</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_settings</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">push</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">push</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
            </div>
