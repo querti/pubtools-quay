@@ -127,11 +127,13 @@ used in operator signing. Dictionary structure:
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pubtools._quay.operator_pusher.OperatorPusher.push_index_images">
-<span class="sig-name descname"><span class="pre">push_index_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iib_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/operator_pusher.html#OperatorPusher.push_index_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.operator_pusher.OperatorPusher.push_index_images" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">push_index_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iib_results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/operator_pusher.html#OperatorPusher.push_index_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.operator_pusher.OperatorPusher.push_index_images" title="Permalink to this definition"></a></dt>
 <dd><p>Push index images which were built in the previous stage to Quay.</p>
 <dl class="simple">
 <dt>Args:</dt><dd><dl class="simple">
 <dt>iib_results (dict):</dt><dd><p>IIB results returned by the build stage</p>
+</dd>
+<dt>tag_suffix (str):</dt><dd><p>extra tag suffix applied to iib version tags if specified</p>
 </dd>
 </dl>
 </dd>

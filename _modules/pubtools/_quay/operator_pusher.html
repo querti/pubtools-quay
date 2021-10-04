@@ -487,13 +487,15 @@
         <span class="k">return</span> <span class="n">iib_results</span></div>
 
 <div class="viewcode-block" id="OperatorPusher.push_index_images"><a class="viewcode-back" href="../../../operator_pusher.html#pubtools._quay.operator_pusher.OperatorPusher.push_index_images">[docs]</a>    <span class="nd">@log_step</span><span class="p">(</span><span class="s2">&quot;Push index images to Quay&quot;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">push_index_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iib_results</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">push_index_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iib_results</span><span class="p">,</span> <span class="n">tag_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Push index images which were built in the previous stage to Quay.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            iib_results (dict):</span>
 <span class="sd">                IIB results returned by the build stage</span>
+<span class="sd">            tag_suffix (str):</span>
+<span class="sd">                extra tag suffix applied to iib version tags if specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">image_schema</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{host}</span><span class="s2">/</span><span class="si">{namespace}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">&quot;</span>
         <span class="n">index_image_repo</span> <span class="o">=</span> <span class="n">image_schema</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -509,7 +511,12 @@
             <span class="n">dest_image</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index_image_repo</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
             <span class="n">ContainerImagePusher</span><span class="o">.</span><span class="n">run_tag_images</span><span class="p">(</span>
                 <span class="n">build_details</span><span class="o">.</span><span class="n">index_image</span><span class="p">,</span> <span class="p">[</span><span class="n">dest_image</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span>
-            <span class="p">)</span></div></div>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">tag_suffix</span><span class="p">:</span>
+                <span class="n">dest_image</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">-</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index_image_repo</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">tag_suffix</span><span class="p">)</span>
+                <span class="n">ContainerImagePusher</span><span class="o">.</span><span class="n">run_tag_images</span><span class="p">(</span>
+                    <span class="n">build_details</span><span class="o">.</span><span class="n">index_image</span><span class="p">,</span> <span class="p">[</span><span class="n">dest_image</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span>
+                <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

@@ -340,12 +340,12 @@ sturcture is an iterator to reduce memory requirements.</p>
 <dd><p>Class for handling the signing of index images.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pubtools._quay.signature_handler.OperatorSignatureHandler.construct_index_image_claim_messages">
-<span class="sig-name descname"><span class="pre">construct_index_image_claim_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signing_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.construct_index_image_claim_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.construct_index_image_claim_messages" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">construct_index_image_claim_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signing_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.construct_index_image_claim_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.construct_index_image_claim_messages" title="Permalink to this definition"></a></dt>
 <dd><p>Construct signature claim messages for RADAS for the specified index image.</p>
 <dl class="simple">
 <dt>index_image (str):</dt><dd><p>Reference to a new index image constructed by IIB.</p>
 </dd>
-<dt>tag (str):</dt><dd><p>Tag of the newly built index image.</p>
+<dt>tags (str):</dt><dd><p>List of tags to be signed.</p>
 </dd>
 <dt>signing_keys (str):</dt><dd><p>Signing keys to be used for signing.</p>
 </dd>
@@ -356,7 +356,7 @@ sturcture is an iterator to reduce memory requirements.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pubtools._quay.signature_handler.OperatorSignatureHandler.sign_operator_images">
-<span class="sig-name descname"><span class="pre">sign_operator_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iib_results</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.sign_operator_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.sign_operator_images" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sign_operator_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iib_results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_suffix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.sign_operator_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.sign_operator_images" title="Permalink to this definition"></a></dt>
 <dd><p>Perform all the steps needed to sign the newly constructed index images.</p>
 <p>Sigstore is not checked for existing signatures, as there’s no way any could exist for a
 newly constructed image.</p>
@@ -371,7 +371,7 @@ newly constructed image.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pubtools._quay.signature_handler.OperatorSignatureHandler.sign_task_index_image">
-<span class="sig-name descname"><span class="pre">sign_task_index_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signing_keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.sign_task_index_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.sign_task_index_image" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sign_task_index_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signing_keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pubtools/_quay/signature_handler.html#OperatorSignatureHandler.sign_task_index_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pubtools._quay.signature_handler.OperatorSignatureHandler.sign_task_index_image" title="Permalink to this definition"></a></dt>
 <dd><p>Perform an alternatve signing workflow used by IIB methods in pub.</p>
 <p>This workflow is used by methods ‘PushAddIIBBundles’, ‘PushRemoveIIBOperators’,
 ‘PushIIBBuildFromScratch’.</p>
@@ -381,7 +381,7 @@ newly constructed image.</p>
 </dd>
 <dt>index_image (str):</dt><dd><p>Index image pointing to the new manifest list.</p>
 </dd>
-<dt>tag (str):</dt><dd><p>Tag of the result index image.</p>
+<dt>tags ([str]):</dt><dd><p>List of tags to sign.</p>
 </dd>
 </dl>
 </dd>
