@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pubtools._quay.operator_pusher &mdash; pubtools-quay 0.6.0 documentation</title>
+  <title>pubtools._quay.operator_pusher &mdash; pubtools-quay 0.9.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -27,7 +27,7 @@
             <a href="../../../index.html" class="icon icon-home"> pubtools-quay
           </a>
               <div class="version">
-                0.6.0
+                0.9.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -86,6 +86,7 @@
     <span class="n">log_step</span><span class="p">,</span>
     <span class="n">get_pyxis_ssl_paths</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.quay_client</span> <span class="kn">import</span> <span class="n">QuayClient</span>
 
 <span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pubtools.quay&quot;</span><span class="p">)</span>
 
@@ -452,7 +453,9 @@
         <span class="k">for</span> <span class="n">version</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version_items_mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="n">image_ref</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index_image_repo</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">manifest_list</span> <span class="o">=</span> <span class="n">quay_client</span><span class="o">.</span><span class="n">get_manifest</span><span class="p">(</span><span class="n">image_ref</span><span class="p">,</span> <span class="n">manifest_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">manifest_list</span> <span class="o">=</span> <span class="n">quay_client</span><span class="o">.</span><span class="n">get_manifest</span><span class="p">(</span>
+                    <span class="n">image_ref</span><span class="p">,</span> <span class="n">media_type</span><span class="o">=</span><span class="n">QuayClient</span><span class="o">.</span><span class="n">MANIFEST_LIST_TYPE</span>
+                <span class="p">)</span>
             <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span> <span class="ow">or</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">401</span><span class="p">:</span>
                     <span class="k">continue</span>
@@ -529,6 +532,7 @@
 <span class="sd">                extra tag suffix applied to iib version tags if specified</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">image_schema</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{host}</span><span class="s2">/</span><span class="si">{namespace}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">&quot;</span>
+        <span class="n">image_schema_tag</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{host}</span><span class="s2">/</span><span class="si">{namespace}</span><span class="s2">/</span><span class="si">{repo}</span><span class="s2">:</span><span class="si">{tag}</span><span class="s2">&quot;</span>
         <span class="n">index_image_repo</span> <span class="o">=</span> <span class="n">image_schema</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">quay_host</span><span class="p">,</span>
             <span class="n">namespace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;quay_namespace&quot;</span><span class="p">],</span>
@@ -541,14 +545,22 @@
                 <span class="k">continue</span>
 
             <span class="n">_</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">build_details</span><span class="o">.</span><span class="n">index_image</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">permanent_index_image</span> <span class="o">=</span> <span class="n">image_schema_tag</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">host</span><span class="o">=</span><span class="n">build_details</span><span class="o">.</span><span class="n">index_image_resolved</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">namespace</span><span class="o">=</span><span class="n">build_details</span><span class="o">.</span><span class="n">index_image_resolved</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">repo</span><span class="o">=</span><span class="s2">&quot;iib&quot;</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">=</span><span class="n">build_details</span><span class="o">.</span><span class="n">build_tags</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">)</span>
             <span class="n">dest_image</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index_image_repo</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+            <span class="c1"># We don&#39;t use permanent index image here because we always want to overwrite</span>
+            <span class="c1"># production tags with the latest index image (in case of parallel pushes)</span>
             <span class="n">ContainerImagePusher</span><span class="o">.</span><span class="n">run_tag_images</span><span class="p">(</span>
                 <span class="n">build_details</span><span class="o">.</span><span class="n">index_image</span><span class="p">,</span> <span class="p">[</span><span class="n">dest_image</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">tag_suffix</span><span class="p">:</span>
                 <span class="n">dest_image</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">-</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index_image_repo</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">tag_suffix</span><span class="p">)</span>
                 <span class="n">ContainerImagePusher</span><span class="o">.</span><span class="n">run_tag_images</span><span class="p">(</span>
-                    <span class="n">build_details</span><span class="o">.</span><span class="n">index_image_resolved</span><span class="p">,</span> <span class="p">[</span><span class="n">dest_image</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span>
+                    <span class="n">permanent_index_image</span><span class="p">,</span> <span class="p">[</span><span class="n">dest_image</span><span class="p">],</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span>
                 <span class="p">)</span></div></div>
 </pre></div>
 
