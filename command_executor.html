@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command Executor &mdash; pubtools-quay 0.10.2 documentation</title>
+  <title>Command Executor &mdash; pubtools-quay 0.10.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -15,6 +15,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> pubtools-quay
           </a>
               <div class="version">
-                0.10.2
+                0.10.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,8 +46,16 @@
 <li class="toctree-l1"><a class="reference internal" href="entrypoints_reference.html">Entrypoints reference</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules_reference.html">Modules reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Command Executor</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#base-class">Base class</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#children-classes">Children classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#base-class">Base class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.command_executor.Executor"><code class="docutils literal notranslate"><span class="pre">Executor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#children-classes">Children classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.command_executor.LocalExecutor"><code class="docutils literal notranslate"><span class="pre">LocalExecutor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.command_executor.RemoteExecutor"><code class="docutils literal notranslate"><span class="pre">RemoteExecutor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.command_executor.ContainerExecutor"><code class="docutils literal notranslate"><span class="pre">ContainerExecutor</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="container_image_pusher.html">Container image pusher</a></li>

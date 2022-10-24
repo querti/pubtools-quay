@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IIB operations &mdash; pubtools-quay 0.10.2 documentation</title>
+  <title>IIB operations &mdash; pubtools-quay 0.10.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -15,6 +15,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> pubtools-quay
           </a>
               <div class="version">
-                0.10.2
+                0.10.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -47,7 +48,13 @@
 <li class="toctree-l2"><a class="reference internal" href="command_executor.html">Command Executor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="container_image_pusher.html">Container image pusher</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">IIB operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#main-entrypoint-functions">Main entrypoint functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main-entrypoint-functions">Main entrypoint functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.iib_operations.task_iib_add_bundles"><code class="docutils literal notranslate"><span class="pre">task_iib_add_bundles()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.iib_operations.task_iib_remove_operators"><code class="docutils literal notranslate"><span class="pre">task_iib_remove_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.iib_operations.task_iib_build_from_scratch"><code class="docutils literal notranslate"><span class="pre">task_iib_build_from_scratch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pubtools._quay.iib_operations.verify_target_settings"><code class="docutils literal notranslate"><span class="pre">verify_target_settings()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="image_untagger.html">Image untagger</a></li>
