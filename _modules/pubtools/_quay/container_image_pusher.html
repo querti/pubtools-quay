@@ -26,14 +26,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> pubtools-quay
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            pubtools-quay
           </a>
               <div class="version">
                 0.10.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -61,7 +65,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">pubtools._quay.container_image_pusher</li>
       <li class="wy-breadcrumbs-aside">
@@ -122,23 +126,21 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">src_quay_client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create and access QuayClient for source image.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_src_quay_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_src_quay_client</span> <span class="o">=</span> <span class="n">QuayClient</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;source_quay_user&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;source_quay_password&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_quay_host&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">quay_host</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_src_quay_client</span> <span class="o">=</span> <span class="n">QuayClient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;source_quay_user&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;source_quay_password&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;source_quay_host&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">quay_host</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_src_quay_client</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dest_quay_client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create and access QuayClient for dest image.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dest_quay_client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dest_quay_client</span> <span class="o">=</span> <span class="n">QuayClient</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;dest_quay_user&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;dest_quay_password&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">quay_host</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dest_quay_client</span> <span class="o">=</span> <span class="n">QuayClient</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;dest_quay_user&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;dest_quay_password&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">quay_host</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dest_quay_client</span>
 
 <div class="viewcode-block" id="ContainerImagePusher.run_tag_images"><a class="viewcode-back" href="../../../container_image_pusher.html#pubtools._quay.container_image_pusher.ContainerImagePusher.run_tag_images">[docs]</a>    <span class="nd">@classmethod</span>
