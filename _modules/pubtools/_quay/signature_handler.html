@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pubtools._quay.signature_handler &mdash; pubtools-quay 0.11.1 documentation</title>
+  <title>pubtools._quay.signature_handler &mdash; pubtools-quay 0.11.2 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
             pubtools-quay
           </a>
               <div class="version">
-                0.11.1
+                0.11.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -438,6 +438,14 @@
                     <span class="s2">&quot;sig_key_id&quot;</span><span class="p">:</span> <span class="n">claim_message</span><span class="p">[</span><span class="s2">&quot;sig_key_id&quot;</span><span class="p">],</span>
                     <span class="s2">&quot;signature_data&quot;</span><span class="p">:</span> <span class="n">signature_message</span><span class="p">[</span><span class="s2">&quot;signed_claim&quot;</span><span class="p">],</span>
                 <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="n">signatures</span><span class="p">:</span>
+            <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Uploading new signature. Reference: </span><span class="si">{</span><span class="n">sig</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Repository: </span><span class="si">{</span><span class="n">sig</span><span class="p">[</span><span class="s1">&#39;repository&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Digest: </span><span class="si">{</span><span class="n">sig</span><span class="p">[</span><span class="s1">&#39;manifest_digest&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Key: </span><span class="si">{</span><span class="n">sig</span><span class="p">[</span><span class="s1">&#39;sig_key_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;--pyxis-server&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_settings</span><span class="p">[</span><span class="s2">&quot;pyxis_server&quot;</span><span class="p">]]</span>
