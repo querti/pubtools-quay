@@ -59,7 +59,7 @@ class Executor(object):
         """Run a bash command."""
         raise NotImplementedError  # pragma: no cover"
 
-    def skopeo_login(self, host="quay.io", username=None, password=None):
+    def skopeo_login(self, host="quay.io", username=None, password=None, authfile=None):
         """
         Attempt to login to Quay if no login credentials are present.
 
@@ -70,12 +70,17 @@ class Executor(object):
                 Username for login.
             password (str):
                 Password for login.
+            authfile (str):
+                Path to an authfile where the login information will be recorded. If not set,
+                this argument will be unused and default behavior will occur.
         """
-        cmd_check = "skopeo login --get-login %s" % host
-        out, err = self._run_cmd(cmd_check, tolerate_err=True)
-        if username and username in out:
-            LOG.info("Already logged in to Quay.io")
-            return
+        # if authfile is specified, skip this check
+        if not authfile:
+            cmd_check = "skopeo login --get-login %s" % host
+            out, err = self._run_cmd(cmd_check, tolerate_err=True)
+            if username and username in out:
+                LOG.info("Already logged in to Quay.io")
+                return
 
         if not username or not password:
             raise ValueError(
@@ -83,7 +88,12 @@ class Executor(object):
             )
         LOG.info("Logging in to Quay with provided credentials")
 
-        cmd_login = ("skopeo login -u {0} --password-stdin %s" % host).format(quote(username))
+        if authfile:
+            cmd_login = ("skopeo login -u {0} --authfile {1} --password-stdin %s" % host).format(
+                quote(username), quote(authfile)
+            )
+        else:
+            cmd_login = ("skopeo login -u {0} --password-stdin %s" % host).format(quote(username))
         out, err = self._run_cmd(cmd_login, stdin=password)
 
         if "Login Succeeded" in out:

@@ -744,6 +744,18 @@ def test_skopeo_login_failed(mock_run_cmd):
 
 
 @mock.patch("pubtools._quay.command_executor.LocalExecutor._run_cmd")
+def test_skopeo_login_custom_authfile(mock_run_cmd):
+    executor = command_executor.LocalExecutor()
+
+    mock_run_cmd.return_value = ("Login Succeeded", "")
+    executor.skopeo_login("quay_host", "quay_user", "quay_token", "/.docker/config.json")
+    mock_run_cmd.assert_called_once_with(
+        "skopeo login -u quay_user --authfile /.docker/config.json --password-stdin quay_host",
+        stdin="quay_token",
+    )
+
+
+@mock.patch("pubtools._quay.command_executor.LocalExecutor._run_cmd")
 def test_skopeo_tag_images(mock_run_cmd):
     executor = command_executor.LocalExecutor()
 
